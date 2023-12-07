@@ -1,6 +1,6 @@
-import { IsNumber } from 'class-validator/types/decorator/decorators';
+import { IsString } from 'class-validator';
 
 export class UpdateIngredientDto {
-  @IsNumber()
-  quantity: number;
+  @IsString()
+  name: string;
 }

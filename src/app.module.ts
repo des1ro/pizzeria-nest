@@ -1,23 +1,27 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { OrderModule } from './order/order.module';
-import { ReservationModule } from './reservation/reservation.module';
 import { DatabaseModule } from './database/database.module';
-import { ConfigModule } from '@nestjs/config';
+import { DinnerTableModule } from './dinner-table/dinner-table.module';
+import { DiscountModule } from './discount/discount.module';
 import { EmployeesModule } from './employees/employees.module';
-import { ProductModule } from './product/product.module';
 import { IngredientModule } from './ingredient/ingredient.module';
+import { OrderModule } from './order/order.module';
+import { ProductModule } from './product/product.module';
+import { ReservationModule } from './reservation/reservation.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    OrderModule,
     ReservationModule,
     DatabaseModule,
     EmployeesModule,
     ProductModule,
     IngredientModule,
+    OrderModule,
+    DiscountModule,
+    DinnerTableModule,
   ],
 
   controllers: [AppController],
