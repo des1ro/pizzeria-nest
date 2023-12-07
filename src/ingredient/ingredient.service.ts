@@ -1,27 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { CreateIngredientDto } from './dto/create-ingredient.dto';
-import { UpdateIngredientDto } from './dto/update-ingredient.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, Repository } from 'typeorm';
+import { IngredientDto } from './dto/create-ingredient.dto';
 import { Ingredient } from './entities/ingredient.entity';
+import { UpdateIngredientDto } from './dto/update-ingredient.dto';
 
 @Injectable()
 export class IngredientService {
   constructor(
+    @InjectRepository(Ingredient)
     private readonly ingredientRepository: Repository<Ingredient>,
     private readonly entityMenager: EntityManager,
   ) {}
-  create(createIngredientDto: CreateIngredientDto) {
+  async create(createIngredientDto: IngredientDto) {
     const ingredient = new Ingredient(createIngredientDto);
-    this.entityMenager.save(ingredient);
-    return 'This action adds a new ingredient';
+    return await this.ingredientRepository.save(ingredient);
   }
 
   findAll() {
-    return `This action returns all ingredient`;
+    return this.ingredientRepository.find();
   }
 
-  findOne(id: string): Promise<Ingredient> {
-    const ingredient = this.ingredientRepository.findOneBy({ id });
+  async findOne(id: string): Promise<Ingredient> {
+    const ingredient = await this.ingredientRepository.findOneBy({ id });
     if (!ingredient) {
       throw new Error(`Ingredient with ID ${id} not found`);
     }
@@ -30,14 +31,12 @@ export class IngredientService {
 
   async update(id: string, updateIngredientDto: UpdateIngredientDto) {
     const ingredient = await this.findOne(id);
-    ingredient.quantity = updateIngredientDto.quantity;
-    this.entityMenager.save(ingredient);
-    return `This action updates a #${id} ingredient`;
+    ingredient.name = updateIngredientDto.name;
+    return await this.entityMenager.save(ingredient);
   }
 
   async remove(id: string) {
     const ingredient = await this.findOne(id);
     this.ingredientRepository.remove(ingredient);
-    return `This action removes a #${id} ingredient`;
   }
 }

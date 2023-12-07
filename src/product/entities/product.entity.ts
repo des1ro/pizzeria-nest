@@ -1,16 +1,24 @@
-import { Column, JoinTable, ManyToMany } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ProductIngredientQuantity } from './product.ingredient.quantity.entity';
 import { ProductEnum } from '../enum/product.enum';
-import { Ingredient } from '../../ingredient/entities/ingredient.entity';
-import { AbstractEntity } from '../../database/entity/abstract.entity';
-
-export class Product extends AbstractEntity<Product> {
-  @Column()
+@Entity()
+export class Product {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+  @Column({ unique: true })
   name: string;
+
   @Column()
   price: number;
+  @OneToMany(
+    () => ProductIngredientQuantity,
+    (ingredientQuantity) => ingredientQuantity.product,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
+  ingredientQuantities: ProductIngredientQuantity[];
   @Column({ type: 'enum', enum: ProductEnum })
   type: ProductEnum;
-  @ManyToMany(() => Ingredient, { eager: true })
-  @JoinTable()
-  ingredients: Ingredient[];
 }

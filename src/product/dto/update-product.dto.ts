@@ -1,11 +1,13 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateProductDto } from './create-product.dto';
-import { IsArray, IsNumber } from 'class-validator/types/decorator/decorators';
-import { Ingredient } from '../../ingredient/entities/ingredient.entity';
+import { Type } from 'class-transformer';
+import { IsArray, IsNumber, IsOptional } from 'class-validator';
+import { ProductIngredientQuantityDto } from './create-ingredient-quantity.dto';
 
-export class UpdateProductDto extends PartialType(CreateProductDto) {
+export class UpdateProductDto {
+  @IsOptional()
   @IsNumber()
   price: number;
-  @IsArray({ context: Ingredient })
-  ingredients: Ingredient[];
+  @IsOptional()
+  @IsArray()
+  @Type(() => ProductIngredientQuantityDto)
+  productIngredientQuantity: ProductIngredientQuantityDto[];
 }

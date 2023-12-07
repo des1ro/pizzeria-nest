@@ -1,8 +1,6 @@
-import { IsString, IsNumber } from 'class-validator/types/decorator/decorators';
+import { IsString } from 'class-validator';
 
-export class CreateIngredientDto {
+export class IngredientDto {
   @IsString()
   name: string;
-  @IsNumber()
-  quantity: number;
 }

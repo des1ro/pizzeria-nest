@@ -6,9 +6,9 @@ dotenv.config();
 const port = process.env.PORT || 3000;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-  await app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+  app.useGlobalPipes(new ValidationPipe());
+  await app.listen(port, async () => {
+    console.log(`Application is running on: ${await app.getUrl()}`);
   });
 }
 bootstrap();

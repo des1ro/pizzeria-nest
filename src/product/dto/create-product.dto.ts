@@ -1,11 +1,16 @@
-import { IsArray, IsNumber, IsString } from 'class-validator';
-import { Ingredient } from '../../ingredient/entities/ingredient.entity';
+import { Type } from 'class-transformer';
+import { IsArray, IsEnum, IsNumber, IsString } from 'class-validator';
+import { ProductEnum } from '../enum/product.enum';
+import { ProductIngredientQuantityDto } from './create-ingredient-quantity.dto';
 
 export class CreateProductDto {
   @IsString()
   name: string;
   @IsNumber()
   price: number;
-  @IsArray({ context: Ingredient })
-  ingredients: Ingredient[];
+  @IsEnum(ProductEnum)
+  type: ProductEnum;
+  @IsArray()
+  @Type(() => ProductIngredientQuantityDto)
+  productIngredientQuantity: ProductIngredientQuantityDto[];
 }

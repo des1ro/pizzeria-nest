@@ -1,7 +1,6 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { AbstractEntity } from '../../database/entity/abstract.entity';
 import { ReservationStatus } from '../enum/reservationStatus.enum';
-import { DinnerTable } from './dinnerTable.entity';
 
 @Entity()
 export class Reservation extends AbstractEntity<Reservation> {
@@ -15,6 +14,4 @@ export class Reservation extends AbstractEntity<Reservation> {
     default: ReservationStatus.ACTIVE,
   })
   status: ReservationStatus;
-  @ManyToOne(() => DinnerTable, (table) => table.reservations)
-  table: DinnerTable;
 }
