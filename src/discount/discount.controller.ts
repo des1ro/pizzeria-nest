@@ -1,11 +1,11 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { DiscountService } from './discount.service';
 import { CreateDiscountDto } from './dto/create-discount.dto';
@@ -16,15 +16,13 @@ export class DiscountController {
   constructor(private readonly discountService: DiscountService) {}
 
   @Post()
-  create(@Body() createDiscountDto: CreateDiscountDto) {
-    try {
-      this.discountService.create(createDiscountDto);
-    } catch (error) {}
+  async create(@Body() createDiscountDto: CreateDiscountDto) {
+    return await this.discountService.create(createDiscountDto);
   }
 
   @Get()
-  findAll() {
-    return this.discountService.findAll();
+  async findAll() {
+    return await this.discountService.findAll();
   }
 
   @Get(':id')
@@ -33,7 +31,7 @@ export class DiscountController {
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateDiscountDto: UpdateDiscountDto,
   ) {

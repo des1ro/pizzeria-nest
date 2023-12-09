@@ -24,7 +24,7 @@ export class IngredientStockController {
 
   @Get()
   findAll() {
-    return this.ingredientStockService.findAll();
+    return this.ingredientStockService.findAllWithRelations();
   }
 
   @Get(':id')

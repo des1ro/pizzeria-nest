@@ -1,11 +1,11 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { DinnerTableService } from './dinner-table.service';
 import { CreateDinnerTableDto } from './dto/create-dinner-table.dto';
@@ -16,30 +16,30 @@ export class DinnerTableController {
   constructor(private readonly dinnerTableService: DinnerTableService) {}
 
   @Post()
-  create(@Body() createDinnerTableDto: CreateDinnerTableDto) {
-    return this.dinnerTableService.create(createDinnerTableDto);
+  async create(@Body() createDinnerTableDto: CreateDinnerTableDto) {
+    return await this.dinnerTableService.create(createDinnerTableDto);
   }
 
   @Get()
-  findAll() {
-    return this.dinnerTableService.findAll();
+  async findAll() {
+    return await this.dinnerTableService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dinnerTableService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    return await this.dinnerTableService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateDinnerTableDto: UpdateDinnerTableDto,
   ) {
-    return this.dinnerTableService.update(id, updateDinnerTableDto);
+    return await this.dinnerTableService.update(id, updateDinnerTableDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.dinnerTableService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.dinnerTableService.remove(id);
   }
 }

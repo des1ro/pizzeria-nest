@@ -18,10 +18,10 @@ import { ReservationModule } from './reservation/reservation.module';
     DatabaseModule,
     EmployeesModule,
     ProductModule,
-    IngredientModule,
     OrderModule,
     DiscountModule,
     DinnerTableModule,
+    IngredientModule,
   ],
 
   controllers: [AppController],
