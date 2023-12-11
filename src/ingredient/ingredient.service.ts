@@ -1,42 +1,40 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, Repository } from 'typeorm';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { IngredientDto } from './dto/create-ingredient.dto';
-import { Ingredient } from './entities/ingredient.entity';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto';
-
+import { Ingredient } from './entities/ingredient.entity';
+import { IngredientRepository } from './ingredient.repo';
 @Injectable()
 export class IngredientService {
-  constructor(
-    @InjectRepository(Ingredient)
-    private readonly ingredientRepository: Repository<Ingredient>,
-    private readonly entityMenager: EntityManager,
-  ) {}
+  constructor(private readonly repository: IngredientRepository) {}
   async create(createIngredientDto: IngredientDto) {
     const ingredient = new Ingredient(createIngredientDto);
-    return await this.ingredientRepository.save(ingredient);
+    return await this.repository.save(ingredient);
   }
 
-  findAll() {
-    return this.ingredientRepository.find();
+  async findAll() {
+    const ingredients = await this.repository.findAll();
+    if (ingredients.length === 0) {
+      throw new NotFoundException('Ingredients not found');
+    }
+    return ingredients;
   }
 
   async findOne(id: string): Promise<Ingredient> {
-    const ingredient = await this.ingredientRepository.findOneBy({ id });
+    const ingredient = await this.repository.findOne(id);
     if (!ingredient) {
-      throw new Error(`Ingredient with ID ${id} not found`);
+      throw new NotFoundException(`Ingredient with ID ${id} not found`);
     }
     return ingredient;
   }
 
   async update(id: string, updateIngredientDto: UpdateIngredientDto) {
     const ingredient = await this.findOne(id);
-    ingredient.name = updateIngredientDto.name;
-    return await this.entityMenager.save(ingredient);
+    const ingredientToUpdate = Object.assign(ingredient, updateIngredientDto);
+    return await this.repository.save(ingredientToUpdate);
   }
 
   async remove(id: string) {
     const ingredient = await this.findOne(id);
-    this.ingredientRepository.remove(ingredient);
+    await this.repository.remove(ingredient);
   }
 }

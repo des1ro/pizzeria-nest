@@ -21,8 +21,10 @@ export class IngredientController {
   }
 
   @Get()
-  findAll() {
-    return this.ingredientService.findAll();
+  async findAll() {
+    console.log('all');
+
+    return await this.ingredientService.findAll();
   }
 
   @Get(':id')

@@ -4,7 +4,7 @@ import { IsNumber } from 'class-validator';
 
 export class CreateIngredientStockDto {
   @Type(() => Ingredient)
-  ingredient: Ingredient[];
+  ingredient: Ingredient;
   @IsNumber()
   amount: number;
 }

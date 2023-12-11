@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { AbstractEntity } from '../../../database/entity/abstract.entity';
 import { Ingredient } from '../../entities/ingredient.entity';
 
@@ -10,6 +10,7 @@ export class IngredientStock extends AbstractEntity<IngredientStock> {
     nullable: false,
     orphanedRowAction: 'delete',
   })
+  @JoinColumn()
   ingredient: Ingredient;
 
   @Column()

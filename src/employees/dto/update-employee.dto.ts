@@ -1,14 +1,12 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateEmployeeDto } from './create-employee.dto';
-import { EmployeeRole } from '../enum/employeeRole.enum';
 import { IsEnum, IsString } from 'class-validator';
+import { EmployeeRole } from '../enum/employeeRole.enum';
 import { EmployeeStatus } from '../enum/employeeStatus.enum';
 
-export class UpdateEmployeeDto extends PartialType(CreateEmployeeDto) {
+export class UpdateEmployeeDto {
   @IsString()
-  readonly name: string;
+  name: string;
   @IsEnum(EmployeeRole)
-  readonly role: EmployeeRole;
+  role: EmployeeRole;
   @IsEnum(EmployeeStatus)
-  readonly employeeStatus: EmployeeStatus;
+  employeeStatus: EmployeeStatus;
 }

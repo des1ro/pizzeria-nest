@@ -1,16 +1,16 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
   BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {
@@ -21,8 +21,6 @@ export class ProductController {
     try {
       return await this.productService.create(createProductDto);
     } catch (error) {
-      console.log(error);
-
       throw new BadRequestException('Something bad happened', {
         cause: error,
         description: error.message,
