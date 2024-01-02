@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DinnerTableController test suite should find all dinner-tables: dinner tables 1`] = `
+[
+  {
+    "active": true,
+    "id": "test uuid one",
+    "name": "test dinner-table",
+    "seats": 1,
+  },
+  {
+    "active": true,
+    "id": "test uuid two",
+    "name": "test dinner-table",
+    "seats": 1,
+  },
+]
+`;
